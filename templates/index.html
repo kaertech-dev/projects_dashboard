@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#142d29">
+    <title>Projects Dashboard</title>
+    <link rel="icon" type="image/png" href="{{ url_for('brand_logo') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+  </head>
+  <body>
+    <main class="dashboard">
+      <header class="topbar">
+        <a class="wordmark" href="/" aria-label="Projects Dashboard home">
+          <img src="{{ url_for('brand_logo') }}" alt="Kaertech logo">
+        </a>
+        <div class="connection-state" id="connection-state" role="status">
+          <span class="state-dot" aria-hidden="true"></span>
+          <span id="status-text">Connecting</span>
+        </div>
+      </header>
+
+      <section class="content" aria-labelledby="page-title">
+        <div class="intro">
+          <p class="eyebrow">WORKSPACE DIRECTORY</p>
+          <h1 id="page-title">Projects<span class="title-period">.</span></h1>
+          <div class="summary-row">
+            <p class="subtitle">Your team's destinations, all in one place.</p>
+            <p class="project-count"><span id="project-count">0</span> <span id="count-label">projects</span></p>
+          </div>
+        </div>
+
+        <div id="project-list" class="project-list" aria-live="polite" aria-busy="true"></div>
+        <p id="message" class="message is-visible" role="status">Loading projects...</p>
+      </section>
+
+      <footer class="footer">
+        <span>PROJECT DIRECTORY</span>
+        <span>LIVE INDEX <span class="footer-dot" aria-hidden="true"></span></span>
+      </footer>
+    </main>
+  </body>
+</html>
