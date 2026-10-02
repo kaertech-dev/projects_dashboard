@@ -11,12 +11,22 @@ load_dotenv()
 
 app = Flask(__name__)
 
+
+def require_env(name):
+    value = os.getenv(name)
+    if not value:
+        raise RuntimeError(f"Missing required environment variable: {name}")
+    return value
+
+
 DB_CONFIG = {
-    "host": os.getenv("DB_HOST", "192.168.20.210"),
+    "host": require_env("DB_HOST"),
     "port": int(os.getenv("DB_PORT", "3306")),
-    "user": os.getenv("DB_USER", "labeling"),
-    "password": os.getenv("DB_PASSWORD", "labeling"),
+    "user": require_env("DB_USER"),
+    "password": require_env("DB_PASSWORD"),
     "database": os.getenv("DB_NAME", "projectsdb"),
+    "connect_timeout": 5,
+    "read_timeout": 5,
 }
 DB_TABLE = os.getenv("DB_TABLE", "dashboard")
 
@@ -59,7 +69,7 @@ def projects():
     for record in records:
         name = str(record.get("projects_name") or "").strip()
         url = str(record.get("url_link") or "").strip()
-        if "://" not in url:
+        if not urlsplit(url).scheme:
             hostname = urlsplit(f"//{url}").hostname
             try:
                 is_private_ip = hostname is not None and ip_address(hostname).is_private

@@ -59,5 +59,9 @@ async function refreshProjects() {
   }
 }
 
-refreshProjects();
-window.setInterval(refreshProjects, 15000);
+async function pollProjects() {
+  await refreshProjects();
+  window.setTimeout(pollProjects, 15000);
+}
+
+pollProjects();
